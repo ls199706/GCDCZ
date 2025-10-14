@@ -64,7 +64,10 @@ Thumbs.db
 /src-tauri/build
 /src-tauri/gen
 /src-tauri/Cargo.lock
+# 忽略除release目录外的可执行文件
 *.exe
+# 但不忽略release目录下的可执行文件
+!/src-tauri/target/release/*.exe
 *.msi
 *.dmg
 *.AppImage
