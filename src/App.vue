@@ -414,8 +414,8 @@ const processDataForInterpolation = (content, models, includeXY = false) => {
         const predictedY = models.yModel.predict(stake);
         const predictedElevation = models.elevationModel.predict(stake);
         
-        // 计算最终高程：预测高程 + 数据文件中的z值
-        const finalElevation = predictedElevation + z;
+        // 计算最终高程：当z为负值时使用预测高程+z，当z为正值时直接使用z值
+        const finalElevation = z < 0 ? predictedElevation + z : z;
         
         processedData.push({
           stake: parts[0], // 保留原始桩号格式
@@ -427,8 +427,8 @@ const processDataForInterpolation = (content, models, includeXY = false) => {
       } else if (models.linearModel) {
         // 使用线性模型预测高程
         const predictedElevation = models.linearModel.predict(stake);
-        // 计算最终高程：预测高程 + 数据文件中的z值
-        const finalElevation = predictedElevation + z;
+        // 计算最终高程：当z为负值时使用预测高程+z，当z为正值时直接使用z值
+        const finalElevation = z < 0 ? predictedElevation + z : z;
         
         processedData.push({
           stake: parts[0], // 保留原始桩号格式
